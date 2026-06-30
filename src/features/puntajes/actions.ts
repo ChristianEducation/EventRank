@@ -299,3 +299,33 @@ export async function toggleVisibilidad(puntajeId: string, nuevoEstado: boolean)
     return { success: false, error: "No se pudo cambiar la visibilidad." };
   }
 }
+
+export async function toggleVisibilidadActividad(actividadId: string, nuevoEstado: boolean): Promise<ActionResult<Puntaje[]>> {
+  const user = await getCurrentUser();
+  if (!user) return { success: false, error: "No autorizado" };
+
+  try {
+    const [act] = await db.select({ eventoId: actividades.eventoId }).from(actividades).where(eq(actividades.id, actividadId));
+    if (!act) return { success: false, error: "Actividad no encontrada" };
+
+    const [ev] = await db.select({ estado: eventos.estado }).from(eventos).where(eq(eventos.id, act.eventoId));
+    if (!ev) return { success: false, error: "Evento no encontrado." };
+    if (ev.estado === "finalizado") {
+      return { success: false, error: "El evento ha finalizado. No se pueden modificar puntajes." };
+    }
+
+    const actualizados = await db
+      .update(puntajes)
+      .set({
+        publico: nuevoEstado,
+        updatedAt: new Date(),
+      })
+      .where(and(eq(puntajes.actividadId, actividadId), eq(puntajes.tenantId, user.tenantId)))
+      .returning();
+
+    return { success: true, data: actualizados as Puntaje[] };
+  } catch (error) {
+    console.error("Error al cambiar la visibilidad masiva:", error);
+    return { success: false, error: "No se pudo cambiar la visibilidad de la actividad." };
+  }
+}

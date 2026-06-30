@@ -12,6 +12,11 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+import { toggleVisibilidadActividad } from "../actions";
 
 import { BulkPuntajeForm } from "./BulkPuntajeForm";
 import { TablaResultados } from "./TablaResultados";
@@ -28,6 +33,17 @@ interface PuntajesListProps {
 export function PuntajesList({ puntajes, grupos, actividades }: PuntajesListProps) {
   const [nuevoOpen, setNuevoOpen] = useState(false);
   const [filtroActividad, setFiltroActividad] = useState<string>("all");
+  const router = useRouter();
+
+  const handleTogglePublico = async (actividadId: string, newState: boolean) => {
+    const res = await toggleVisibilidadActividad(actividadId, newState);
+    if (res.success) {
+      toast.success(`Resultados ${newState ? "publicados" : "ocultados"} exitosamente.`);
+      router.refresh();
+    } else {
+      toast.error(res.error || "Ocurrió un error");
+    }
+  };
 
   const canCreate = grupos.length > 0 && actividades.length > 0;
   const selectedActividad = actividades.find((a) => a.id === filtroActividad);
@@ -123,11 +139,17 @@ export function PuntajesList({ puntajes, grupos, actividades }: PuntajesListProp
                   <div>
                     <div className="flex justify-between items-start gap-2">
                       <h3 className="font-bold text-lg line-clamp-2">{act.nombre}</h3>
-                      {isPublic ? (
-                        <span className="text-[10px] font-bold bg-green-100 text-green-700 px-2 py-1 rounded-full uppercase shrink-0">Público</span>
-                      ) : (
-                        <span className="text-[10px] font-bold bg-muted text-muted-foreground px-2 py-1 rounded-full uppercase shrink-0">Privado</span>
-                      )}
+                      <div className="flex items-center gap-2 shrink-0">
+                        <Label htmlFor={`publico-${act.id}`} className="text-[10px] font-bold uppercase cursor-pointer text-muted-foreground">
+                          {isPublic ? "Público" : "Privado"}
+                        </Label>
+                        <Switch 
+                          id={`publico-${act.id}`}
+                          checked={isPublic} 
+                          onCheckedChange={(checked) => handleTogglePublico(act.id, checked)}
+                          className="data-[state=checked]:bg-green-500 scale-75 origin-right"
+                        />
+                      </div>
                     </div>
                     <p className="text-sm text-muted-foreground mt-1">
                       {pts.length} alianzas calificadas
