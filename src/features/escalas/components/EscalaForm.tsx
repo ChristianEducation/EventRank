@@ -63,8 +63,7 @@ export function EscalaForm({ eventoId, escala, onSuccess }: EscalaFormProps) {
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<FormValues>({
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    resolver: zodResolver(formSchema as any),
+    resolver: zodResolver(formSchema) as import("react-hook-form").Resolver<FormValues>,
     defaultValues: {
       nombre: escala?.nombre ?? "",
       puntajesArray: defaultPuntajes,

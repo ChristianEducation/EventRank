@@ -9,6 +9,7 @@ import {
   time,
   timestamp,
   uuid,
+  unique,
 } from "drizzle-orm/pg-core";
 
 export const tenants = pgTable("tenants", {
@@ -118,6 +119,7 @@ export const puntajes = pgTable(
     index("puntajes_evento_id_idx").on(table.eventoId),
     index("puntajes_actividad_id_idx").on(table.actividadId),
     index("puntajes_grupo_id_idx").on(table.grupoId),
+    unique("puntajes_actividad_grupo_unique").on(table.actividadId, table.grupoId),
   ],
 );
 

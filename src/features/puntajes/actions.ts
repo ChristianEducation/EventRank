@@ -48,11 +48,12 @@ export async function ingresarPuntaje(input: IngresarPuntajeInput): Promise<Acti
     .from(actividades)
     .where(eq(actividades.id, actividadId));
     
-  if (act) {
-    const [ev] = await db.select({ estado: eventos.estado }).from(eventos).where(eq(eventos.id, act.eventoId));
-    if (ev && ev.estado === "finalizado") {
-      return { success: false, error: "El evento ha finalizado. No se pueden modificar puntajes." };
-    }
+  if (!act) return { success: false, error: "Actividad no encontrada." };
+
+  const [ev] = await db.select({ estado: eventos.estado }).from(eventos).where(eq(eventos.id, act.eventoId));
+  if (!ev) return { success: false, error: "Evento no encontrado." };
+  if (ev.estado === "finalizado") {
+    return { success: false, error: "El evento ha finalizado. No se pueden modificar puntajes." };
   }
 
   // 2. Resolver puntaje base desde la escala
@@ -127,7 +128,8 @@ export async function registrarPuntajesMasivos(input: BulkPuntajesInput): Promis
   if (!act) return { success: false, error: "Actividad no encontrada" };
 
   const [ev] = await db.select({ estado: eventos.estado }).from(eventos).where(eq(eventos.id, act.eventoId));
-  if (ev && ev.estado === "finalizado") {
+  if (!ev) return { success: false, error: "Evento no encontrado." };
+  if (ev.estado === "finalizado") {
     return { success: false, error: "El evento ha finalizado. No se pueden modificar puntajes." };
   }
 
@@ -150,7 +152,7 @@ export async function registrarPuntajesMasivos(input: BulkPuntajesInput): Promis
       return { success: false, error: `El lugar ${r.lugar} no existe en la escala.` };
     }
     
-    let finalScore = (Number(puntos) * (r.comodin ? 2 : 1)) - r.sancion;
+    let finalScore = (Number(puntos) * (r.comodin ? 2 : 1)) + (r.bonificacion || 0) - r.sancion;
     finalScore = Math.max(0, finalScore);
 
     upsertData.push({
@@ -161,7 +163,7 @@ export async function registrarPuntajesMasivos(input: BulkPuntajesInput): Promis
       lugar: r.lugar,
       puntajeBase: Number(puntos),
       comodin: r.comodin,
-      bonificacion: 0,
+      bonificacion: r.bonificacion || 0,
       sancion: r.sancion,
       puntajeFinal: finalScore,
       publico: false, // Por defecto privado hasta que lo publiquen
@@ -220,11 +222,12 @@ export async function editarPuntaje(puntajeId: string, input: EditarPuntajeInput
     .from(actividades)
     .where(eq(actividades.id, current.actividadId));
     
-  if (act) {
-    const [ev] = await db.select({ estado: eventos.estado }).from(eventos).where(eq(eventos.id, act.eventoId));
-    if (ev && ev.estado === "finalizado") {
-      return { success: false, error: "El evento ha finalizado. No se pueden modificar puntajes." };
-    }
+  if (!act) return { success: false, error: "Actividad no encontrada." };
+
+  const [ev] = await db.select({ estado: eventos.estado }).from(eventos).where(eq(eventos.id, act.eventoId));
+  if (!ev) return { success: false, error: "Evento no encontrado." };
+  if (ev.estado === "finalizado") {
+    return { success: false, error: "El evento ha finalizado. No se pueden modificar puntajes." };
   }
 
   // RN-02: Si estaba público, forzar privado al editar para requerir republicación manual
@@ -267,6 +270,18 @@ export async function toggleVisibilidad(puntajeId: string, nuevoEstado: boolean)
   if (!user) return { success: false, error: "No autorizado" };
 
   try {
+    const [current] = await db
+      .select({ eventoId: puntajes.eventoId })
+      .from(puntajes)
+      .where(and(eq(puntajes.id, puntajeId), eq(puntajes.tenantId, user.tenantId)));
+
+    if (!current) return { success: false, error: "Puntaje no encontrado." };
+
+    const [ev] = await db.select({ estado: eventos.estado }).from(eventos).where(eq(eventos.id, current.eventoId));
+    if (!ev) return { success: false, error: "Evento no encontrado." };
+    if (ev.estado === "finalizado") {
+      return { success: false, error: "El evento ha finalizado. No se pueden modificar puntajes." };
+    }
     const [actualizado] = await db
       .update(puntajes)
       .set({

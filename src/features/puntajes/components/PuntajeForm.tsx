@@ -47,8 +47,7 @@ export function PuntajeForm({ puntaje, grupos, actividades, onSuccess, defaultAc
     watch,
     formState: { errors, isSubmitting },
   } = useForm<FormValues>({
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    resolver: zodResolver(ingresarPuntajeSchema) as any,
+    resolver: zodResolver(ingresarPuntajeSchema) as import("react-hook-form").Resolver<FormValues>,
     defaultValues: {
       actividadId: puntaje?.actividadId ?? defaultActividadId ?? "",
       grupoId: puntaje?.grupoId ?? "",

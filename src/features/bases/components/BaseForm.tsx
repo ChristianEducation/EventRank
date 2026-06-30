@@ -34,8 +34,7 @@ export function BaseForm({ eventoId, base, onSuccess }: BaseFormProps) {
     watch,
     formState: { errors, isSubmitting },
   } = useForm<FormValues>({
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    resolver: zodResolver(crearBaseSchema) as any,
+    resolver: zodResolver(crearBaseSchema) as import("react-hook-form").Resolver<FormValues>,
     defaultValues: {
       titulo: base?.titulo ?? "",
       contenido: base?.contenido ?? "",

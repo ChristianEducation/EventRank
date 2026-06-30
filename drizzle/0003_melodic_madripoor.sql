@@ -1,0 +1,1 @@
+ALTER TABLE "puntajes" ADD CONSTRAINT "puntajes_actividad_grupo_unique" UNIQUE("actividad_id","grupo_id");

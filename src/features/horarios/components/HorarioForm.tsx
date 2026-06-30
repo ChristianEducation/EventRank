@@ -39,16 +39,14 @@ export function HorarioForm({ eventoId, horario, onSuccess }: HorarioFormProps) 
     watch,
     formState: { errors, isSubmitting },
   } = useForm<FormValues>({
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    resolver: zodResolver(crearHorarioSchema) as any,
+    resolver: zodResolver(crearHorarioSchema) as import("react-hook-form").Resolver<FormValues>,
     defaultValues: {
       nombreActividad: horario?.nombreActividad ?? "",
       fecha: horario?.fecha ? new Date(horario.fecha) : new Date(),
       horaInicio: horario?.horaInicio ? horario.horaInicio.slice(0,5) : "", // "HH:MM:SS" to "HH:MM"
       horaFin: horario?.horaFin ? horario.horaFin.slice(0,5) : "",
       lugar: horario?.lugar ?? "",
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      jornada: horario?.jornada as any ?? "",
+      jornada: (horario?.jornada as FormValues["jornada"]) ?? undefined,
     },
   });
 
@@ -97,8 +95,7 @@ export function HorarioForm({ eventoId, horario, onSuccess }: HorarioFormProps) 
           {/* Jornada */}
           <div className="flex flex-col gap-2">
             <Label className="font-medium">Jornada (Opcional)</Label>
-            {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-            <Select value={watchJornada} onValueChange={(val) => setValue("jornada", val as any)}>
+            <Select value={watchJornada} onValueChange={(val) => setValue("jornada", ((val as string) === " " ? undefined : val) as FormValues["jornada"])}>
               <SelectTrigger className="border-clay">
                 <SelectValue placeholder="Seleccionar..." />
               </SelectTrigger>

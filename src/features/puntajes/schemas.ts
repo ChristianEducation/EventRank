@@ -25,6 +25,7 @@ export const bulkPuntajesSchema = z.object({
     grupoId: z.string().uuid(),
     lugar: z.preprocess((val) => Number(val), z.number().int().min(1, "Lugar debe ser al menos 1").nullable()),
     comodin: z.boolean().default(false),
+    bonificacion: z.preprocess((val) => Number(val), z.number().int().min(0).default(0)),
     sancion: z.preprocess((val) => Number(val), z.number().int().min(0).default(0)),
   }))
 });

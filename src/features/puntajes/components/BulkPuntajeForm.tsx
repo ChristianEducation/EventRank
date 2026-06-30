@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useForm, useFieldArray, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Star, ShieldAlert } from "lucide-react";
+import { Star } from "lucide-react";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
@@ -49,14 +49,14 @@ export function BulkPuntajeForm({
         grupoId: g.id,
         lugar: p?.lugar ?? null,
         comodin: p?.comodin ?? false,
+        bonificacion: p?.bonificacion ?? 0,
         sancion: p?.sancion ?? 0,
       };
     }),
   };
 
   const form = useForm<BulkPuntajesInput>({
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    resolver: zodResolver(bulkPuntajesSchema) as any,
+    resolver: zodResolver(bulkPuntajesSchema) as import("react-hook-form").Resolver<BulkPuntajesInput>,
     defaultValues,
   });
 
@@ -158,15 +158,22 @@ export function BulkPuntajeForm({
                   </Button>
                 </div>
 
-                <div className="flex flex-col gap-1">
-                  <Label className="text-[10px] uppercase font-bold text-muted-foreground">Sanción (-)</Label>
-                  <div className="relative">
-                    <ShieldAlert className="absolute left-2.5 top-1/2 -translate-y-1/2 size-4 text-red-500/50" />
+                <div className="flex flex-row items-center gap-2">
+                  <div className="flex flex-col gap-1 w-16">
+                    <Label className="text-[10px] uppercase font-bold text-muted-foreground" title="Bonificación Extra (+)">Bonif.</Label>
                     <Input
                       type="number"
                       min={0}
-                      className="w-24 pl-8 h-9 border-clay"
-                      placeholder="0"
+                      className="h-9 border-clay"
+                      {...form.register(`resultados.${index}.bonificacion`)}
+                    />
+                  </div>
+                  <div className="flex flex-col gap-1 w-16">
+                    <Label className="text-[10px] uppercase font-bold text-muted-foreground" title="Sanción (-)">Sanción</Label>
+                    <Input
+                      type="number"
+                      min={0}
+                      className="h-9 border-clay text-destructive"
                       {...form.register(`resultados.${index}.sancion`)}
                     />
                   </div>
