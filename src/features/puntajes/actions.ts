@@ -1,6 +1,6 @@
 "use server";
 
-import { eq, and } from "drizzle-orm";
+import { eq, and, sql } from "drizzle-orm";
 import { db } from "@/lib/db";
 import { puntajes, actividades, escalasPuntaje, eventos } from "@/lib/db/schema";
 import { getCurrentUser } from "@/lib/auth";
@@ -179,13 +179,13 @@ export async function registrarPuntajesMasivos(input: BulkPuntajesInput): Promis
       .onConflictDoUpdate({
         target: [puntajes.actividadId, puntajes.grupoId],
         set: {
-          lugar: db.raw(`excluded.lugar`),
-          puntajeBase: db.raw(`excluded.puntaje_base`),
-          comodin: db.raw(`excluded.comodin`),
-          bonificacion: db.raw(`excluded.bonificacion`),
-          sancion: db.raw(`excluded.sancion`),
-          puntajeFinal: db.raw(`excluded.puntaje_final`),
-          publico: db.raw(`excluded.publico`),
+          lugar: sql`excluded.lugar`,
+          puntajeBase: sql`excluded.puntaje_base`,
+          comodin: sql`excluded.comodin`,
+          bonificacion: sql`excluded.bonificacion`,
+          sancion: sql`excluded.sancion`,
+          puntajeFinal: sql`excluded.puntaje_final`,
+          publico: sql`excluded.publico`,
           updatedAt: new Date(),
         }
       })

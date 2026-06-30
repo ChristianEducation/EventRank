@@ -47,7 +47,7 @@ export function BulkPuntajeForm({
       const p = puntajesActuales.find((p) => p.grupoId === g.id && p.actividadId === actividadId);
       return {
         grupoId: g.id,
-        lugar: p?.lugar ?? ("" as unknown as number), // "" para que el select esté vacío
+        lugar: p?.lugar ?? null,
         comodin: p?.comodin ?? false,
         sancion: p?.sancion ?? 0,
       };
@@ -55,7 +55,7 @@ export function BulkPuntajeForm({
   };
 
   const form = useForm<BulkPuntajesInput>({
-    resolver: zodResolver(bulkPuntajesSchema),
+    resolver: zodResolver(bulkPuntajesSchema) as any,
     defaultValues,
   });
 
