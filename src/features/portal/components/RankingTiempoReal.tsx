@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Trophy, Medal, ArrowUp, ArrowDown, Minus } from "lucide-react";
+import { Trophy, Medal } from "lucide-react";
 import { createBrowserSupabaseClient } from "@/lib/supabase/client";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -19,7 +19,7 @@ interface RankingTiempoRealProps {
 }
 
 export function RankingTiempoReal({ eventoId, initialRanking, eventoFinalizado }: RankingTiempoRealProps) {
-  const [ranking, setRanking] = useState<GrupoRanking[]>(initialRanking);
+  const [ranking] = useState<GrupoRanking[]>(initialRanking);
   const [isUpdating, setIsUpdating] = useState(false);
   const supabase = createBrowserSupabaseClient();
 
@@ -42,7 +42,7 @@ export function RankingTiempoReal({ eventoId, initialRanking, eventoFinalizado }
           table: "puntajes",
           filter: `evento_id=eq.${eventoId}`,
         },
-        async (payload) => {
+        async (_payload) => {
           // Si el cambio es sobre un puntaje público (o pasó de publico a privado)
           // Hacemos un soft refresh del ranking.
           // Como la suma es compleja (SQL), lo ideal es llamar a una API route:

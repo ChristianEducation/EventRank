@@ -1,4 +1,4 @@
-import { eq, and, asc, desc, inArray } from "drizzle-orm";
+import { eq, and, asc } from "drizzle-orm";
 import { db } from "@/lib/db";
 import {
   eventos,

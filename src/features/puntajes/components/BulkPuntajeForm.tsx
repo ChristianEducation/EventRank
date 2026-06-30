@@ -55,6 +55,7 @@ export function BulkPuntajeForm({
   };
 
   const form = useForm<BulkPuntajesInput>({
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     resolver: zodResolver(bulkPuntajesSchema) as any,
     defaultValues,
   });

@@ -1,4 +1,4 @@
-import { eq, desc } from "drizzle-orm";
+import { desc } from "drizzle-orm";
 import { db } from "@/lib/db";
 import { tenants, eventos } from "@/lib/db/schema";
 import { getCurrentUser } from "@/lib/auth";
