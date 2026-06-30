@@ -1,0 +1,213 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "@clerk/ui/themes/shadcn.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-heading: var(--font-sans);
+  --color-live: var(--live);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  /* Radius claymorphism: 20px base — todo escala desde aquí */
+  --radius-sm: calc(var(--radius) * 0.5);
+  --radius-md: calc(var(--radius) * 0.75);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.5);
+  --radius-2xl: calc(var(--radius) * 2);
+  --radius-3xl: calc(var(--radius) * 2.5);
+  --radius-4xl: calc(var(--radius) * 3);
+}
+
+/* ============================================================
+   Design system EventRank — Claymorphism + Vibrant & Block-based
+   Paleta: Coral (#FF6B6B) + Cyan (#4ECDC4) + Verde (#45B7B8) + Blanco
+   Skill: ui-ux-pro-max · Estilo educación competitiva
+   Pares texto/fondo verificados >= 4.5:1 (WCAG AA)
+   ============================================================ */
+:root {
+  /* Fondo principal — verde menta muy suave */
+  --background: #f0fdf9;
+  --foreground: #0d2b29;
+
+  /* Cards — blanco puro para contraste con fondo */
+  --card: #ffffff;
+  --card-foreground: #0d2b29;
+
+  /* Popovers / Dropdowns */
+  --popover: #ffffff;
+  --popover-foreground: #0d2b29;
+
+  /* Primary — Coral vibrante (CTAs, botones principales) */
+  --primary: #ff6b6b;
+  --primary-foreground: #ffffff;
+
+  /* Secondary — Cyan (acciones secundarias, badges info) */
+  --secondary: #4ecdc4;
+  --secondary-foreground: #0d2b29;
+
+  /* Muted — fondo suave para secciones secundarias */
+  --muted: #d4f5f1;
+  --muted-foreground: #2d7a72;
+
+  /* Accent — Verde claro (hover states, highlights activos) */
+  --accent: #c8f5c8;
+  --accent-foreground: #1a6b1a;
+
+  /* Destructivo */
+  --destructive: #e53e3e;
+
+  /* Bordes — oscuro y grueso (clay style) */
+  --border: #0d2b29;
+  --input: #b2e8e3;
+
+  /* Focus ring — coral */
+  --ring: #ff6b6b;
+
+  /* Badge "En vivo" — coral */
+  --live: #ff6b6b;
+
+  /* Charts */
+  --chart-1: #ff6b6b;
+  --chart-2: #4ecdc4;
+  --chart-3: #45b7b8;
+  --chart-4: #f9c74f;
+  --chart-5: #0d2b29;
+
+  /* Radius base — 20px (chunky & rounded, marca del claymorphism) */
+  --radius: 1.25rem;
+
+  /* Sidebar */
+  --sidebar: #ffffff;
+  --sidebar-foreground: #0d2b29;
+  --sidebar-primary: #ff6b6b;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #d4f5f1;
+  --sidebar-accent-foreground: #0d2b29;
+  --sidebar-border: #0d2b29;
+  --sidebar-ring: #ff6b6b;
+}
+
+.dark {
+  --background: #0a1f1e;
+  --foreground: #e8fffe;
+
+  --card: #0f2d2b;
+  --card-foreground: #e8fffe;
+
+  --popover: #0f2d2b;
+  --popover-foreground: #e8fffe;
+
+  --primary: #ff8e8e;
+  --primary-foreground: #1a0000;
+
+  --secondary: #4ecdc4;
+  --secondary-foreground: #0a1f1e;
+
+  --muted: #112e2b;
+  --muted-foreground: #7ecec8;
+
+  --accent: #1a3d1a;
+  --accent-foreground: #90ee90;
+
+  --destructive: #fc8181;
+
+  --border: #4ecdc4;
+  --input: #1a3a38;
+
+  --ring: #ff8e8e;
+  --live: #ff8e8e;
+
+  --chart-1: #ff8e8e;
+  --chart-2: #4ecdc4;
+  --chart-3: #45b7b8;
+  --chart-4: #f9c74f;
+  --chart-5: #e8fffe;
+
+  --radius: 1.25rem;
+
+  --sidebar: #0a1f1e;
+  --sidebar-foreground: #e8fffe;
+  --sidebar-primary: #ff8e8e;
+  --sidebar-primary-foreground: #1a0000;
+  --sidebar-accent: #112e2b;
+  --sidebar-accent-foreground: #e8fffe;
+  --sidebar-border: #4ecdc4;
+  --sidebar-ring: #ff8e8e;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
+  }
+}
+
+/* ============================================================
+   Claymorphism utilities globales
+   .shadow-clay      → sombra doble offset (característica del estilo)
+   .shadow-clay-sm   → versión compacta para elementos pequeños
+   .border-clay      → borde grueso 3px sólido
+   ============================================================ */
+@layer utilities {
+  .shadow-clay {
+    box-shadow:
+      inset -2px -2px 6px rgba(0, 0, 0, 0.12),
+      4px 4px 0px var(--border);
+  }
+
+  .shadow-clay-sm {
+    box-shadow:
+      inset -1px -1px 4px rgba(0, 0, 0, 0.10),
+      3px 3px 0px var(--border);
+  }
+
+  .shadow-clay-hover {
+    box-shadow:
+      inset -2px -2px 6px rgba(0, 0, 0, 0.12),
+      6px 6px 0px var(--border);
+  }
+
+  .border-clay {
+    border-width: 3px;
+    border-style: solid;
+    border-color: var(--border);
+  }
+}

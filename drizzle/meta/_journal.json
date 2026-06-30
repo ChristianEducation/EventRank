@@ -1,0 +1,27 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1782691608566,
+      "tag": "0000_productive_tyger_tiger",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1782692917456,
+      "tag": "0001_mute_may_parker",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1782772590672,
+      "tag": "0002_eventos_colores_array",
+      "breakpoints": true
+    }
+  ]
+}
