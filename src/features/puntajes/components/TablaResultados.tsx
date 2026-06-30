@@ -158,7 +158,7 @@ export function TablaResultados({ puntajes, grupos, actividades }: TablaResultad
                         }
                       />
                       <DropdownMenuContent align="end" className="border-[3px] border-border shadow-clay-sm">
-                        <DropdownMenuItem onSelect={() => setEditingPuntaje(p)}>
+                        <DropdownMenuItem onClick={() => setEditingPuntaje(p)}>
                           <Pencil className="size-3.5 mr-2" />
                           Editar y recalcular
                         </DropdownMenuItem>

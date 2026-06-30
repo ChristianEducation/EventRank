@@ -134,11 +134,11 @@ export function BaseList({ eventoId, bases }: BaseListProps) {
                     }
                   />
                   <DropdownMenuContent align="end" className="border-[3px] border-border shadow-clay-sm">
-                    <DropdownMenuItem onSelect={() => handleToggle(b.id, b.visible)}>
+                    <DropdownMenuItem onClick={() => handleToggle(b.id, b.visible)}>
                       {b.visible ? <><EyeOff className="size-3.5 mr-2" /> Ocultar del portal</> : <><Eye className="size-3.5 mr-2" /> Hacer visible</>}
                     </DropdownMenuItem>
-                    <DropdownMenuItem onSelect={() => setEditingItem(b)}><Pencil className="size-3.5 mr-2" /> Editar</DropdownMenuItem>
-                    <DropdownMenuItem onSelect={() => setDeletingId(b.id)} className="text-destructive"><Trash2 className="size-3.5 mr-2" /> Eliminar</DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setEditingItem(b)}><Pencil className="size-3.5 mr-2" /> Editar</DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setDeletingId(b.id)} className="text-destructive"><Trash2 className="size-3.5 mr-2" /> Eliminar</DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </div>

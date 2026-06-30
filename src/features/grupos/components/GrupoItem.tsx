@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { MoreHorizontal, Pencil, PowerOff, Trash2 } from "lucide-react";
+import { MoreHorizontal, Pencil, Trash2, Eye, EyeOff } from "lucide-react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
@@ -151,20 +151,23 @@ export function GrupoItem({ grupo, eventoId, index }: GrupoItemProps) {
               }
             />
           <DropdownMenuContent align="end" className="w-44">
-            <DropdownMenuItem onSelect={() => setEditOpen(true)}>
+            <DropdownMenuItem onClick={() => setEditOpen(true)}>
               <Pencil className="size-3.5" aria-hidden />
               Editar
             </DropdownMenuItem>
             <DropdownMenuItem
-              onSelect={handleDesactivar}
+              onClick={handleDesactivar}
               disabled={cargandoDesactivar}
             >
-              <PowerOff className="size-3.5" aria-hidden />
-              {cargandoDesactivar ? "Desactivando..." : "Desactivar"}
+              {grupo.activo ? (
+                <><EyeOff className="size-3.5" aria-hidden /> Desactivar</>
+              ) : (
+                <><Eye className="size-3.5" aria-hidden /> Activar</>
+              )}
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem
-              onSelect={() => setDeleteOpen(true)}
+              onClick={() => setDeleteOpen(true)}
               className="text-destructive focus:text-destructive"
             >
               <Trash2 className="size-3.5" aria-hidden />

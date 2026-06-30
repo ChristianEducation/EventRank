@@ -140,8 +140,8 @@ export function HorarioList({ eventoId, horarios }: HorarioListProps) {
                             }
                           />
                           <DropdownMenuContent align="end" className="border-[3px] border-border shadow-clay-sm">
-                            <DropdownMenuItem onSelect={() => setEditingItem(h)}><Pencil className="size-3.5 mr-2" /> Editar</DropdownMenuItem>
-                            <DropdownMenuItem onSelect={() => setDeletingId(h.id)} className="text-destructive"><Trash2 className="size-3.5 mr-2" /> Eliminar</DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => setEditingItem(h)}><Pencil className="size-3.5 mr-2" /> Editar</DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => setDeletingId(h.id)} className="text-destructive"><Trash2 className="size-3.5 mr-2" /> Eliminar</DropdownMenuItem>
                           </DropdownMenuContent>
                         </DropdownMenu>
                       </div>

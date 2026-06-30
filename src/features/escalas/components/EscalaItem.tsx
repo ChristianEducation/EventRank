@@ -135,13 +135,13 @@ export function EscalaItem({ escala, eventoId }: EscalaItemProps) {
               }
             />
             <DropdownMenuContent align="end" className="w-44 border-[3px] border-border shadow-clay-sm">
-              <DropdownMenuItem onSelect={() => setEditOpen(true)}>
+              <DropdownMenuItem onClick={() => setEditOpen(true)}>
                 <Pencil className="size-3.5" aria-hidden />
                 Editar
               </DropdownMenuItem>
               <DropdownMenuSeparator className="bg-border" />
               <DropdownMenuItem
-                onSelect={() => setDeleteOpen(true)}
+                onClick={() => setDeleteOpen(true)}
                 className="text-destructive focus:text-destructive font-medium"
               >
                 <Trash2 className="size-3.5" aria-hidden />

@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation";
-import Image from "next/image";
 import { getEventoPublico } from "@/features/portal/queries";
 import { AccesoPin } from "@/features/portal/components/AccesoPin";
 import { PortalNav, PortalNavDesktop } from "@/features/portal/components/PortalNav";
@@ -25,34 +24,22 @@ export default async function PortalLayout({ children, params }: PortalLayoutPro
       className="min-h-screen bg-background text-foreground pb-24 md:pb-8 flex flex-col items-center"
       style={colorPrincipal ? { "--primary": colorPrincipal } as React.CSSProperties : {}}
     >
-      {/* Header Público */}
-      <header className="w-full bg-card border-b-[3px] border-border/50 sticky top-0 z-40 shadow-sm overflow-hidden">
+      {/* Header Público (Glassmorphism y compacto) */}
+      <header className="w-full bg-background/80 backdrop-blur-md border-b-2 border-border/50 sticky top-0 z-40 shadow-[0_4px_30px_rgba(0,0,0,0.03)] overflow-hidden">
         {/* Barra superior fina con branding del Tenant */}
-        <div className="bg-muted px-4 py-1.5 flex justify-center items-center text-[10px] font-bold text-muted-foreground uppercase tracking-widest border-b border-border/30">
+        <div className="bg-muted/80 backdrop-blur-sm px-4 py-1 flex justify-center items-center text-[9px] font-bold text-muted-foreground uppercase tracking-widest border-b border-border/30">
           {evento.tenantNombre}
         </div>
         
-        <div className="px-4 py-4 md:py-6 max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-4">
-          {evento.imagenUrl ? (
-            <div className="w-16 h-16 md:w-20 md:h-20 rounded-2xl overflow-hidden shrink-0 border-[3px] border-border shadow-clay-sm relative bg-muted">
-              <Image src={evento.imagenUrl} alt={evento.nombre} fill className="object-cover" />
-            </div>
-          ) : (
-            <div className="w-16 h-16 md:w-20 md:h-20 rounded-2xl shrink-0 border-[3px] border-border shadow-clay-sm flex items-center justify-center bg-primary/10 text-primary font-bold text-2xl uppercase">
-              {evento.nombre.substring(0,2)}
-            </div>
+        <div className="px-4 py-2.5 md:py-3 max-w-4xl mx-auto flex items-center justify-between gap-4">
+          <h1 className="text-xl md:text-2xl font-black font-heading leading-tight tracking-tight text-foreground truncate">
+            {evento.nombre}
+          </h1>
+          {evento.estado === "finalizado" && (
+            <span className="shrink-0 inline-flex items-center rounded-full bg-amber-100 px-2 py-0.5 text-[10px] md:text-xs font-bold text-amber-800 border-2 border-amber-200">
+              Finalizado
+            </span>
           )}
-          
-          <div className="flex flex-col items-center md:items-start text-center md:text-left flex-1">
-            <h1 className="text-2xl md:text-3xl font-black font-heading leading-tight tracking-tight text-foreground">
-              {evento.nombre}
-            </h1>
-            {evento.estado === "finalizado" && (
-              <span className="mt-1 inline-flex items-center rounded-full bg-amber-100 px-2.5 py-0.5 text-xs font-bold text-amber-800 border-2 border-amber-200">
-                Evento Finalizado
-              </span>
-            )}
-          </div>
         </div>
       </header>
 

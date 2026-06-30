@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Plus, Swords, FileSpreadsheet } from "lucide-react";
+import { Plus, Swords, FileSpreadsheet, Search, ChevronLeft, ChevronRight } from "lucide-react";
 
 import {
   Dialog,
@@ -11,6 +11,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 import { ActividadForm } from "./ActividadForm";
 import { ActividadItem } from "./ActividadItem";
@@ -27,8 +28,21 @@ interface ActividadListProps {
 export function ActividadList({ actividades, escalasDisponibles, eventoId }: ActividadListProps) {
   const [nuevoOpen, setNuevoOpen] = useState(false);
   const [cargaMasivaOpen, setCargaMasivaOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
   const hasEscalas = escalasDisponibles.length > 0;
+
+  const filteredActividades = actividades.filter(a => 
+    a.nombre.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const totalPages = Math.ceil(filteredActividades.length / itemsPerPage);
+  const currentActividades = filteredActividades.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
   return (
     <div className="flex flex-col gap-5">
@@ -95,20 +109,70 @@ export function ActividadList({ actividades, escalasDisponibles, eventoId }: Act
         </div>
       )}
 
+      {/* Buscador */}
+      {actividades.length > 0 && (
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+          <Input 
+            placeholder="Buscar actividad..." 
+            value={searchTerm}
+            onChange={(e) => {
+              setSearchTerm(e.target.value);
+              setCurrentPage(1);
+            }}
+            className="pl-9 bg-card border-[3px] border-border shadow-clay-sm"
+          />
+        </div>
+      )}
+
       {/* Lista o empty state */}
       {actividades.length === 0 ? (
         <EmptyState onNuevo={() => setNuevoOpen(true)} canCreate={hasEscalas} />
+      ) : filteredActividades.length === 0 ? (
+        <div className="text-center py-10 text-muted-foreground">
+          No se encontraron actividades con &quot;{searchTerm}&quot;
+        </div>
       ) : (
-        <ul className="flex flex-col gap-3" aria-label="Lista de actividades">
-          {actividades.map((actividad) => (
-            <ActividadItem 
-              key={actividad.id} 
-              actividad={actividad} 
-              eventoId={eventoId} 
-              escalasDisponibles={escalasDisponibles} 
-            />
-          ))}
-        </ul>
+        <>
+          <ul className="flex flex-col gap-3" aria-label="Lista de actividades">
+            {currentActividades.map((actividad) => (
+              <ActividadItem 
+                key={actividad.id} 
+                actividad={actividad} 
+                eventoId={eventoId} 
+                escalasDisponibles={escalasDisponibles} 
+              />
+            ))}
+          </ul>
+          
+          {totalPages > 1 && (
+            <div className="flex items-center justify-between mt-4 border-[3px] border-border rounded-2xl bg-card px-4 py-2 shadow-clay-sm">
+              <span className="text-sm text-muted-foreground font-medium">
+                Página {currentPage} de {totalPages}
+              </span>
+              <div className="flex gap-2">
+                <Button 
+                  variant="outline" 
+                  size="icon-sm" 
+                  onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                  disabled={currentPage === 1}
+                  className="border-2 border-transparent"
+                >
+                  <ChevronLeft className="size-4" />
+                </Button>
+                <Button 
+                  variant="outline" 
+                  size="icon-sm" 
+                  onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                  disabled={currentPage === totalPages}
+                  className="border-2 border-transparent"
+                >
+                  <ChevronRight className="size-4" />
+                </Button>
+              </div>
+            </div>
+          )}
+        </>
       )}
     </div>
   );

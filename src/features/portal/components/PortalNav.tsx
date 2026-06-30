@@ -16,7 +16,7 @@ export function PortalNav({ slug }: PortalNavProps) {
   const navItems = [
     { name: "Ranking", href: basePath, icon: Trophy, exact: true },
     { name: "Actividades", href: `${basePath}/actividades`, icon: Swords, exact: false },
-    { name: "Agenda", href: `${basePath}/horarios`, icon: CalendarDays, exact: false },
+    { name: "Horarios", href: `${basePath}/horarios`, icon: CalendarDays, exact: false },
     { name: "Reglamento", href: `${basePath}/bases`, icon: BookOpen, exact: false },
   ];
 
@@ -58,7 +58,7 @@ export function PortalNavDesktop({ slug }: PortalNavProps) {
   const navItems = [
     { name: "Ranking en vivo", href: basePath, icon: Trophy, exact: true },
     { name: "Actividades", href: `${basePath}/actividades`, icon: Swords, exact: false },
-    { name: "Agenda", href: `${basePath}/horarios`, icon: CalendarDays, exact: false },
+    { name: "Horarios", href: `${basePath}/horarios`, icon: CalendarDays, exact: false },
     { name: "Reglamento", href: `${basePath}/bases`, icon: BookOpen, exact: false },
   ];
 
