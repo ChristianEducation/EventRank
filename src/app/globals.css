@@ -189,14 +189,14 @@
 @layer utilities {
   .shadow-clay {
     box-shadow:
-      inset -2px -2px 6px rgba(0, 0, 0, 0.12),
-      4px 4px 0px var(--border);
+      inset -2px -2px 6px rgba(0, 0, 0, 0.08),
+      3px 3px 0px var(--border);
   }
 
   .shadow-clay-sm {
     box-shadow:
-      inset -1px -1px 4px rgba(0, 0, 0, 0.10),
-      3px 3px 0px var(--border);
+      inset -1px -1px 4px rgba(0, 0, 0, 0.05),
+      2px 2px 0px var(--border);
   }
 
   .shadow-clay-hover {
@@ -206,7 +206,7 @@
   }
 
   .border-clay {
-    border-width: 3px;
+    border-width: 2px;
     border-style: solid;
     border-color: var(--border);
   }

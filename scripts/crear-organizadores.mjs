@@ -33,13 +33,12 @@ async function main() {
   const lines = content.split("\n").map(l => l.trim()).filter(Boolean);
   
   // Asumimos que la primera línea son las cabeceras
-  const headers = lines[0].split(",");
   
   for (let i = 1; i < lines.length; i++) {
     const parts = lines[i].split(",");
     if (parts.length < 5) continue;
     
-    const [firstName, lastName, email, password, rol] = parts;
+    const [firstName, lastName, email, password] = parts;
 
     try {
       // 1. Buscar si existe

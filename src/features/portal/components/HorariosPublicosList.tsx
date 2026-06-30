@@ -112,7 +112,7 @@ export function HorariosPublicosList({ horarios, actividades }: HorariosPublicos
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex flex-col gap-3 bg-card p-4 rounded-3xl border-[3px] border-border shadow-clay-sm">
+      <div className="flex flex-col gap-3 bg-card p-4 rounded-3xl border-2 border-border shadow-clay-sm">
         <div className="flex items-center gap-2 mb-1">
           <Filter className="size-4 text-primary" />
           <span className="font-bold text-sm text-foreground">Filtros</span>
@@ -154,7 +154,7 @@ export function HorariosPublicosList({ horarios, actividades }: HorariosPublicos
       </div>
 
       {dates.length === 0 ? (
-        <div className="flex flex-col items-center justify-center p-12 text-center border-[3px] border-dashed border-border/50 rounded-3xl bg-card">
+        <div className="flex flex-col items-center justify-center p-12 text-center border-2 border-dashed border-border/50 rounded-3xl bg-card">
           <CalendarDays className="size-10 text-muted-foreground opacity-30 mb-4" />
           <h3 className="text-lg font-bold text-foreground">No hay horarios para mostrar</h3>
         </div>
@@ -166,15 +166,15 @@ export function HorariosPublicosList({ horarios, actividades }: HorariosPublicos
             
             return (
               <div key={dateKey} className="flex flex-col gap-4">
-                <h3 className="text-lg font-bold capitalize text-primary border-b-[3px] border-primary/20 pb-2">
+                <h3 className="text-lg font-bold capitalize text-primary border-b-2 border-primary/20 pb-2">
                   {dateStr}
                 </h3>
-                <div className="grid gap-3 sm:grid-cols-2">
+                <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-3">
                   {items.map((h) => (
                     <button 
                       key={h.id}
                       onClick={() => handleHorarioClick(h)}
-                      className="group flex flex-col text-left rounded-2xl border-[3px] border-border bg-card p-4 shadow-clay-sm transition-all hover:border-primary/50 hover:bg-muted/30 hover:-translate-y-0.5 relative overflow-hidden"
+                      className="group flex flex-col text-left rounded-2xl border-2 border-border bg-card p-4 shadow-clay-sm transition-all hover:border-primary/50 hover:bg-muted/30 hover:-translate-y-0.5 relative overflow-hidden"
                     >
                       <h4 className="font-bold text-foreground leading-tight mb-2 pr-6 group-hover:text-primary transition-colors">{h.nombreActividad}</h4>
                       
@@ -192,7 +192,7 @@ export function HorariosPublicosList({ horarios, actividades }: HorariosPublicos
                           </div>
                         )}
                         {h.jornada && (
-                          <div className="mt-1 inline-flex w-fit items-center rounded-full bg-muted px-2 py-0.5 text-xs font-bold capitalize text-foreground border border-border/50">
+                          <div className="mt-1 inline-flex w-fit items-center rounded-full bg-secondary text-secondary-foreground px-2 py-0.5 text-xs font-bold capitalize border-2 border-border shadow-sm">
                             Jornada: {h.jornada}
                           </div>
                         )}
@@ -208,7 +208,7 @@ export function HorariosPublicosList({ horarios, actividades }: HorariosPublicos
 
       {/* Modal de Detalle */}
       <Dialog open={!!selectedActividad} onOpenChange={(open) => !open && setSelectedActividad(null)}>
-        <DialogContent className="sm:max-w-md bg-card border-[3px] border-border shadow-clay mx-4 w-[calc(100%-2rem)]">
+        <DialogContent className="sm:max-w-md bg-card border-2 border-border shadow-clay mx-4 w-[calc(100%-2rem)]">
           <DialogHeader>
             <DialogTitle className="text-xl">{selectedActividad?.nombre}</DialogTitle>
           </DialogHeader>

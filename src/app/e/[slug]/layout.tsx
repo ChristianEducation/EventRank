@@ -25,14 +25,14 @@ export default async function PortalLayout({ children, params }: PortalLayoutPro
       style={colorPrincipal ? { "--primary": colorPrincipal } as React.CSSProperties : {}}
     >
       {/* Header Público (Glassmorphism y compacto) */}
-      <header className="w-full bg-background/80 backdrop-blur-md border-b-2 border-border/50 sticky top-0 z-40 shadow-[0_4px_30px_rgba(0,0,0,0.03)] overflow-hidden">
+      <header className="w-full bg-background/60 backdrop-blur-md border-b-2 border-border/50 sticky top-0 z-40 shadow-[0_4px_30px_rgba(0,0,0,0.03)] overflow-hidden">
         {/* Barra superior fina con branding del Tenant */}
         <div className="bg-muted/80 backdrop-blur-sm px-4 py-1 flex justify-center items-center text-[9px] font-bold text-muted-foreground uppercase tracking-widest border-b border-border/30">
           {evento.tenantNombre}
         </div>
         
-        <div className="px-4 py-2.5 md:py-3 max-w-4xl mx-auto flex items-center justify-between gap-4">
-          <h1 className="text-xl md:text-2xl font-black font-heading leading-tight tracking-tight text-foreground truncate">
+        <div className="px-4 py-2 md:py-3 max-w-6xl mx-auto flex items-center justify-between gap-4">
+          <h1 className="text-lg sm:text-xl md:text-2xl font-black font-heading leading-snug tracking-tight text-foreground truncate">
             {evento.nombre}
           </h1>
           {evento.estado === "finalizado" && (
@@ -44,7 +44,7 @@ export default async function PortalLayout({ children, params }: PortalLayoutPro
       </header>
 
       {/* Main Content Area */}
-      <main className="w-full max-w-4xl mx-auto px-4 pt-6 md:pt-8 flex-1 flex flex-col">
+      <main className="w-full max-w-6xl mx-auto px-4 pt-6 md:pt-8 flex-1 flex flex-col">
         <PortalNavDesktop slug={slug} />
         {children}
       </main>

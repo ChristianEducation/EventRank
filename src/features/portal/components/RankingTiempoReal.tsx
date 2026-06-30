@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Trophy, Medal } from "lucide-react";
 import { createBrowserSupabaseClient } from "@/lib/supabase/client";
 import { motion, AnimatePresence } from "framer-motion";
+import { cn } from "@/lib/utils";
 import { AlianzaDetalleModal } from "./AlianzaDetalleModal";
 
 interface GrupoRanking {
@@ -67,7 +68,7 @@ export function RankingTiempoReal({ eventoId, initialRanking, eventoFinalizado }
 
   if (ranking.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center p-12 text-center border-[3px] border-dashed border-border/50 rounded-3xl bg-card">
+      <div className="flex flex-col items-center justify-center p-12 text-center border-2 border-dashed border-border/50 rounded-3xl bg-card">
         <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center mb-4">
           <Trophy className="size-8 text-muted-foreground opacity-50" />
         </div>
@@ -101,33 +102,32 @@ export function RankingTiempoReal({ eventoId, initialRanking, eventoFinalizado }
           const isTop3 = index < 3;
           
           // Estilos según posición
-          let cardStyle = "border-border bg-card";
           let numStyle = "bg-muted text-muted-foreground";
           let icon = null;
 
           if (index === 0) {
-            cardStyle = "border-yellow-400 bg-yellow-50/50";
             numStyle = "bg-yellow-400 text-yellow-900";
             icon = <Medal className="size-5 text-yellow-600 drop-shadow-sm" />;
           } else if (index === 1) {
-            cardStyle = "border-slate-300 bg-slate-50/50";
             numStyle = "bg-slate-300 text-slate-800";
             icon = <Medal className="size-5 text-slate-500 drop-shadow-sm" />;
           } else if (index === 2) {
-            cardStyle = "border-amber-600/50 bg-amber-50/30";
             numStyle = "bg-amber-600 text-white";
             icon = <Medal className="size-5 text-amber-700 drop-shadow-sm" />;
           }
 
           return (
-            <motion.div 
+            <motion.button
+              key={grupo.id}
               layout
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.3 }}
-              key={grupo.id}
+              transition={{ duration: 0.4, type: "spring", bounce: 0.3 }}
               onClick={() => setSelectedAlianza(grupo)}
-              className={`flex items-center gap-4 p-4 rounded-2xl border-[3px] shadow-clay-sm relative overflow-hidden cursor-pointer hover:-translate-y-1 active:scale-[0.98] transition-all ${cardStyle}`}
+              className={cn(
+                "relative flex items-center gap-4 p-4 rounded-3xl border-2 border-border shadow-clay-sm bg-card hover:-translate-y-1 transition-transform group text-left",
+                index === 0 && "border-primary shadow-clay bg-primary/5"
+              )}
             >
               {/* Barra de color lateral opcional */}
               {grupo.color && (
@@ -159,7 +159,7 @@ export function RankingTiempoReal({ eventoId, initialRanking, eventoFinalizado }
                   Puntos
                 </div>
               </div>
-            </motion.div>
+            </motion.button>
           );
         })}
       </div>

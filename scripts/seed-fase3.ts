@@ -35,8 +35,7 @@ async function main() {
   const matchStart = text.match(startRegex);
   
   if (!matchStart) throw new Error("No se encontró el inicio de las actividades en el PDF.");
-  
-  let relevantText = text.substring(matchStart.index!);
+  const relevantText = text.substring(matchStart.index!);
 
   // Cortar la parte final si hay texto basura después de la actividad 77 (la 77 es Ornamentacion de Salas)
   // Normalmente la 77 es la última.

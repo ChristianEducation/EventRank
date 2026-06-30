@@ -51,21 +51,21 @@ export function ActividadesPublicasList({ actividades }: ActividadesPublicasList
             setSearchTerm(e.target.value);
             setCurrentPage(1);
           }}
-          className="pl-9 bg-card border-[3px] border-border shadow-clay-sm h-12 text-base rounded-2xl"
+          className="pl-9 bg-card border-2 border-border shadow-clay-sm h-12 text-base rounded-2xl"
         />
       </div>
 
       {filtered.length === 0 ? (
-        <div className="text-center py-10 text-muted-foreground bg-card border-[3px] border-border rounded-3xl">
+        <div className="text-center py-10 text-muted-foreground bg-card border-2 border-border rounded-3xl">
           No se encontraron competencias que coincidan con &quot;{searchTerm}&quot;.
         </div>
       ) : (
-        <div className="flex flex-col gap-3">
+        <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-3">
           {currentActividades.map((act) => (
             <button
               key={act.id}
               onClick={() => setSelectedActividad(act)}
-              className="flex items-center justify-between text-left p-4 rounded-2xl border-[3px] border-border shadow-clay-sm bg-card hover:bg-muted/50 hover:border-primary/50 transition-all duration-200 group"
+              className="flex items-center justify-between text-left p-4 rounded-2xl border-2 border-border shadow-clay-sm bg-card hover:bg-muted/50 hover:border-primary/50 transition-all duration-200 group"
             >
               <div className="flex flex-col">
                 <span className="font-bold text-lg text-foreground group-hover:text-primary transition-colors">{act.nombre}</span>
@@ -79,7 +79,7 @@ export function ActividadesPublicasList({ actividades }: ActividadesPublicasList
       )}
 
       {totalPages > 1 && (
-        <div className="flex items-center justify-between mt-2 border-[3px] border-border rounded-2xl bg-card px-4 py-2 shadow-clay-sm">
+        <div className="flex items-center justify-between mt-2 border-2 border-border rounded-2xl bg-card px-4 py-2 shadow-clay-sm">
           <span className="text-sm text-muted-foreground font-medium">
             Página {currentPage} de {totalPages}
           </span>
@@ -107,7 +107,7 @@ export function ActividadesPublicasList({ actividades }: ActividadesPublicasList
       )}
 
       <Dialog open={!!selectedActividad} onOpenChange={(open) => !open && setSelectedActividad(null)}>
-        <DialogContent className="sm:max-w-md bg-card border-[3px] border-border shadow-clay mx-4 w-[calc(100%-2rem)]">
+        <DialogContent className="sm:max-w-md bg-card border-2 border-border shadow-clay mx-4 w-[calc(100%-2rem)]">
           <DialogHeader>
             <DialogTitle className="text-xl">{selectedActividad?.nombre}</DialogTitle>
           </DialogHeader>
