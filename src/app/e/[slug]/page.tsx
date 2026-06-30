@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
-import { getEventoPublico, getRankingPublico } from "@/features/portal/queries";
+import { getEventoPublico, getRankingPublico, getResultadosPublicos } from "@/features/portal/queries";
 import { RankingTiempoReal } from "@/features/portal/components/RankingTiempoReal";
+import { BuscadorResultados } from "@/features/portal/components/BuscadorResultados";
 
 interface PortalRankingPageProps {
   params: Promise<{ slug: string }>;
@@ -15,6 +16,7 @@ export default async function PortalRankingPage({ params }: PortalRankingPagePro
   }
 
   const ranking = await getRankingPublico(evento.id);
+  const resultadosPublicos = await getResultadosPublicos(evento.id);
   const finalizado = evento.estado === "finalizado";
 
   return (
@@ -31,6 +33,8 @@ export default async function PortalRankingPage({ params }: PortalRankingPagePro
         initialRanking={ranking} 
         eventoFinalizado={finalizado}
       />
+
+      <BuscadorResultados resultadosRaw={resultadosPublicos} />
     </div>
   );
 }

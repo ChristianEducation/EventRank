@@ -5,7 +5,7 @@ import fs from "fs";
 import path from "path";
 // pdf-parse will be imported dynamically
 import { db } from "../src/lib/db";
-import { eventos, escalasPuntaje, actividades } from "../src/lib/db/schema";
+import { eventos, escalasPuntaje, actividades, puntajes } from "../src/lib/db/schema";
 import { eq } from "drizzle-orm";
 
 async function main() {
@@ -31,7 +31,7 @@ async function main() {
 
   // 3. Extraer sección de actividades
   // Las actividades empiezan justo en "1. Acción social" en la página 24
-  const startRegex = /\n1\.\s+Acción social/i;
+  const startRegex = /\n1\.\s+Acción social\s*\n/i;
   const matchStart = text.match(startRegex);
   
   if (!matchStart) throw new Error("No se encontró el inicio de las actividades en el PDF.");
@@ -90,6 +90,7 @@ async function main() {
   console.log(`Se detectaron ${recordsToInsert.length} actividades para insertar...`);
   
   if (recordsToInsert.length > 0) {
+    await db.delete(puntajes).where(eq(puntajes.eventoId, eventoId));
     await db.delete(actividades).where(eq(actividades.eventoId, eventoId));
     
     // Drizzle tiene límite de inyección bulk (suele ser ~65000 parámetros). 77 filas está súper bien.

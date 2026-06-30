@@ -138,18 +138,18 @@ export function GrupoItem({ grupo, eventoId, index }: GrupoItemProps) {
 
         {/* Menú de acciones — dropdown para no saturar la fila */}
         <DropdownMenu>
-          <DropdownMenuTrigger
-            render={
-              <Button
-                variant="ghost"
-                size="icon"
-                aria-label={`Acciones para ${grupo.nombre}`}
-                className="shrink-0 opacity-0 transition-opacity group-hover:opacity-100 focus-visible:opacity-100"
-              >
-                <MoreHorizontal className="size-4" aria-hidden />
-              </Button>
-            }
-          />
+            <DropdownMenuTrigger
+              render={
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  aria-label={`Acciones para ${grupo.nombre}`}
+                  className="shrink-0 opacity-100 sm:opacity-0 transition-opacity group-hover:opacity-100 focus-visible:opacity-100"
+                >
+                  <MoreHorizontal className="size-4" aria-hidden />
+                </Button>
+              }
+            />
           <DropdownMenuContent align="end" className="w-44">
             <DropdownMenuItem onSelect={() => setEditOpen(true)}>
               <Pencil className="size-3.5" aria-hidden />

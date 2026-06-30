@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Trophy, Medal } from "lucide-react";
 import { createBrowserSupabaseClient } from "@/lib/supabase/client";
 import { motion, AnimatePresence } from "framer-motion";
+import { AlianzaDetalleModal } from "./AlianzaDetalleModal";
 
 interface GrupoRanking {
   id: string;
@@ -21,6 +22,7 @@ interface RankingTiempoRealProps {
 export function RankingTiempoReal({ eventoId, initialRanking, eventoFinalizado }: RankingTiempoRealProps) {
   const [ranking] = useState<GrupoRanking[]>(initialRanking);
   const [isUpdating, setIsUpdating] = useState(false);
+  const [selectedAlianza, setSelectedAlianza] = useState<GrupoRanking | null>(null);
   const supabase = createBrowserSupabaseClient();
 
   useEffect(() => {
@@ -42,7 +44,7 @@ export function RankingTiempoReal({ eventoId, initialRanking, eventoFinalizado }
           table: "puntajes",
           filter: `evento_id=eq.${eventoId}`,
         },
-        async (_payload) => {
+        async () => {
           // Si el cambio es sobre un puntaje público (o pasó de publico a privado)
           // Hacemos un soft refresh del ranking.
           // Como la suma es compleja (SQL), lo ideal es llamar a una API route:
@@ -124,7 +126,8 @@ export function RankingTiempoReal({ eventoId, initialRanking, eventoFinalizado }
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.3 }}
               key={grupo.id}
-              className={`flex items-center gap-4 p-4 rounded-2xl border-[3px] shadow-clay-sm relative overflow-hidden ${cardStyle}`}
+              onClick={() => setSelectedAlianza(grupo)}
+              className={`flex items-center gap-4 p-4 rounded-2xl border-[3px] shadow-clay-sm relative overflow-hidden cursor-pointer hover:-translate-y-1 active:scale-[0.98] transition-all ${cardStyle}`}
             >
               {/* Barra de color lateral opcional */}
               {grupo.color && (
@@ -160,6 +163,19 @@ export function RankingTiempoReal({ eventoId, initialRanking, eventoFinalizado }
           );
         })}
       </div>
+
+      {selectedAlianza && (
+        <AlianzaDetalleModal
+          eventoId={eventoId}
+          grupoId={selectedAlianza.id}
+          grupoNombre={selectedAlianza.nombre}
+          grupoColor={selectedAlianza.color}
+          open={!!selectedAlianza}
+          onOpenChange={(val) => {
+            if (!val) setSelectedAlianza(null);
+          }}
+        />
+      )}
     </div>
   );
 }

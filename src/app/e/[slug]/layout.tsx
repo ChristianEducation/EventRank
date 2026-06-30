@@ -21,8 +21,10 @@ export default async function PortalLayout({ children, params }: PortalLayoutPro
   const colorPrincipal = evento.colores && evento.colores.length > 0 ? evento.colores[0] : null;
 
   const content = (
-    <div className="min-h-screen bg-background text-foreground pb-24 md:pb-8 flex flex-col items-center">
-      
+    <div 
+      className="min-h-screen bg-background text-foreground pb-24 md:pb-8 flex flex-col items-center"
+      style={colorPrincipal ? { "--primary": colorPrincipal } as React.CSSProperties : {}}
+    >
       {/* Header Público */}
       <header className="w-full bg-card border-b-[3px] border-border/50 sticky top-0 z-40 shadow-sm overflow-hidden">
         {/* Barra superior fina con branding del Tenant */}

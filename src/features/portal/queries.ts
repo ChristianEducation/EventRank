@@ -105,3 +105,49 @@ export async function getBasesPublicas(eventoId: string) {
     .where(and(eq(reglasGenerales.eventoId, eventoId), eq(reglasGenerales.visible, true)))
     .orderBy(asc(reglasGenerales.orden), asc(reglasGenerales.createdAt));
 }
+
+// 6. Obtener Detalle de Puntajes por Alianza (Solo públicos)
+export async function getDetallePuntajesAlianza(eventoId: string, grupoId: string) {
+  return await db
+    .select({
+      id: puntajes.id,
+      lugar: puntajes.lugar,
+      puntajeBase: puntajes.puntajeBase,
+      bonificacion: puntajes.bonificacion,
+      sancion: puntajes.sancion,
+      comodin: puntajes.comodin,
+      puntajeFinal: puntajes.puntajeFinal,
+      actividadNombre: actividades.nombre,
+      fecha: puntajes.createdAt,
+    })
+    .from(puntajes)
+    .innerJoin(actividades, eq(puntajes.actividadId, actividades.id))
+    .where(and(
+      eq(puntajes.eventoId, eventoId),
+      eq(puntajes.grupoId, grupoId),
+      eq(puntajes.publico, true)
+    ))
+    .orderBy(asc(puntajes.createdAt));
+}
+
+// 7. Obtener Todos los Puntajes Públicos para el Buscador
+export async function getResultadosPublicos(eventoId: string) {
+  return await db
+    .select({
+      actividadId: actividades.id,
+      actividadNombre: actividades.nombre,
+      grupoId: grupos.id,
+      grupoNombre: grupos.nombre,
+      grupoColor: grupos.color,
+      lugar: puntajes.lugar,
+      puntajeFinal: puntajes.puntajeFinal,
+    })
+    .from(puntajes)
+    .innerJoin(actividades, eq(puntajes.actividadId, actividades.id))
+    .innerJoin(grupos, eq(puntajes.grupoId, grupos.id))
+    .where(and(
+      eq(puntajes.eventoId, eventoId),
+      eq(puntajes.publico, true)
+    ))
+    .orderBy(asc(actividades.orden), asc(puntajes.lugar));
+}

@@ -45,7 +45,9 @@ export function PuntajesList({ puntajes, grupos, actividades }: PuntajesListProp
           <span className="text-sm font-bold text-foreground min-w-fit">Filtro:</span>
           <Select value={filtroActividad} onValueChange={(val) => setFiltroActividad(val || "all")}>
             <SelectTrigger className="w-[200px] border-clay bg-card h-9">
-              <SelectValue placeholder="Todas las actividades" />
+              <SelectValue>
+                {selectedActividad?.nombre || "Todas las actividades"}
+              </SelectValue>
             </SelectTrigger>
             <SelectContent className="border-[3px] border-border shadow-clay-sm">
               <SelectItem value="all">Ver todas las competencias</SelectItem>
