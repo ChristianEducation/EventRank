@@ -166,7 +166,7 @@ export async function registrarPuntajesMasivos(input: BulkPuntajesInput): Promis
       bonificacion: r.bonificacion || 0,
       sancion: r.sancion,
       puntajeFinal: finalScore,
-      publico: false, // Por defecto privado hasta que lo publiquen
+      publico: input.publico ?? false,
     });
   }
 

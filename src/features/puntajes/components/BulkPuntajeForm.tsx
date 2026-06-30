@@ -9,6 +9,7 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { Switch } from "@/components/ui/switch";
 import {
   Select,
   SelectContent,
@@ -43,6 +44,7 @@ export function BulkPuntajeForm({
   // Mapeamos los puntajes actuales para prellenar el formulario
   const defaultValues: BulkPuntajesInput = {
     actividadId,
+    publico: puntajesActuales.length > 0 ? puntajesActuales[0].publico : false,
     resultados: grupos.map((g) => {
       const p = puntajesActuales.find((p) => p.grupoId === g.id && p.actividadId === actividadId);
       return {
@@ -180,7 +182,23 @@ export function BulkPuntajeForm({
         })}
       </div>
 
-      <div className="flex justify-end pt-4 border-t-[3px] border-border/50">
+      <div className="flex flex-col sm:flex-row items-center justify-between pt-4 border-t-[3px] border-border/50 gap-4">
+        <div className="flex items-center gap-2">
+          <Controller
+            control={control}
+            name="publico"
+            render={({ field }) => (
+              <Switch
+                checked={field.value}
+                onCheckedChange={field.onChange}
+                id="publico"
+              />
+            )}
+          />
+          <Label htmlFor="publico" className="font-semibold text-sm cursor-pointer">
+            Hacer resultados públicos
+          </Label>
+        </div>
         <Button
           type="submit"
           className="w-full sm:w-auto min-w-40 font-bold border-[3px] border-primary-foreground/20 shadow-clay"

@@ -21,6 +21,7 @@ export type EditarPuntajeInput = Omit<IngresarPuntajeInput, "actividadId" | "gru
 
 export const bulkPuntajesSchema = z.object({
   actividadId: z.string().uuid("Seleccione una actividad válida"),
+  publico: z.boolean().default(false),
   resultados: z.array(z.object({
     grupoId: z.string().uuid(),
     lugar: z.preprocess((val) => (val === "" || val === "0" || val === 0 || val === null || val === undefined) ? null : Number(val), z.number().int().min(1, "Lugar debe ser al menos 1").nullable()),
