@@ -5,8 +5,8 @@ export const ingresarPuntajeSchema = z.object({
   grupoId: z.string().uuid("Seleccione un grupo válido"),
   lugar: z.preprocess((val) => Number(val), z.number().int().min(1, "El lugar debe ser al menos 1")),
   comodin: z.boolean().default(false),
-  bonificacion: z.preprocess((val) => Number(val), z.number().int().min(0, "La bonificación no puede ser negativa").default(0)),
-  sancion: z.preprocess((val) => Number(val), z.number().int().min(0, "La sanción no puede ser negativa").default(0)),
+  bonificacion: z.preprocess((val) => (val === "" || val === null || val === undefined || isNaN(Number(val))) ? 0 : Number(val), z.number().int().min(0, "La bonificación no puede ser negativa").default(0)),
+  sancion: z.preprocess((val) => (val === "" || val === null || val === undefined || isNaN(Number(val))) ? 0 : Number(val), z.number().int().min(0, "La sanción no puede ser negativa").default(0)),
   publico: z.boolean().default(false),
 });
 
@@ -23,10 +23,10 @@ export const bulkPuntajesSchema = z.object({
   actividadId: z.string().uuid("Seleccione una actividad válida"),
   resultados: z.array(z.object({
     grupoId: z.string().uuid(),
-    lugar: z.preprocess((val) => Number(val), z.number().int().min(1, "Lugar debe ser al menos 1").nullable()),
+    lugar: z.preprocess((val) => (val === "" || val === "0" || val === 0 || val === null || val === undefined) ? null : Number(val), z.number().int().min(1, "Lugar debe ser al menos 1").nullable()),
     comodin: z.boolean().default(false),
-    bonificacion: z.preprocess((val) => Number(val), z.number().int().min(0).default(0)),
-    sancion: z.preprocess((val) => Number(val), z.number().int().min(0).default(0)),
+    bonificacion: z.preprocess((val) => (val === "" || val === null || val === undefined || isNaN(Number(val))) ? 0 : Number(val), z.number().int().min(0).default(0)),
+    sancion: z.preprocess((val) => (val === "" || val === null || val === undefined || isNaN(Number(val))) ? 0 : Number(val), z.number().int().min(0).default(0)),
   }))
 });
 

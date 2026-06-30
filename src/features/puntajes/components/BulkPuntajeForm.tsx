@@ -126,12 +126,8 @@ export function BulkPuntajeForm({
                         <SelectContent>
                           <SelectItem value="0" className="text-muted-foreground italic">N/A</SelectItem>
                           {opcionesLugar.map((n) => {
-                            // Permitimos elegir si está libre, O si ya es el valor seleccionado por este mismo grupo
-                            const isSelectedByOther = watchResultados.some(
-                              (r, i) => i !== index && r.lugar === n
-                            );
                             return (
-                              <SelectItem key={n} value={n.toString()} disabled={isSelectedByOther}>
+                              <SelectItem key={n} value={n.toString()}>
                                 {n}° Lugar
                               </SelectItem>
                             );
