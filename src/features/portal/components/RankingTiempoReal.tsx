@@ -125,7 +125,7 @@ export function RankingTiempoReal({ eventoId, initialRanking, eventoFinalizado }
               transition={{ duration: 0.4, type: "spring", bounce: 0.3 }}
               onClick={() => setSelectedAlianza(grupo)}
               className={cn(
-                "relative flex items-center gap-4 p-4 rounded-3xl border-2 border-border shadow-clay-sm bg-card hover:-translate-y-1 transition-transform group text-left",
+                "relative flex items-center gap-4 p-4 rounded-3xl border-2 border-border shadow-clay-sm bg-card hover:-translate-y-1 transition-transform group text-left overflow-hidden",
                 index === 0 && "border-primary shadow-clay bg-primary/5"
               )}
             >
