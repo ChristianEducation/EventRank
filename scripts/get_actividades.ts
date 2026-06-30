@@ -1,0 +1,1 @@
+import { db } from '../src/lib/db'; import { actividades } from '../src/lib/db/schema'; async function run() { const act = await db.select().from(actividades); console.log(JSON.stringify(act, null, 2)); process.exit(0); } run();
